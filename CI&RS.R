@@ -2,23 +2,26 @@
 # Title: On Causal Inference for the Relative Survival setting
 # Author: Matthew J. Smith
 # Date: 12th February 2023
-
-
-# This code is based on the code written by Mats Stensrud et al in the paper:  
-
-# Jessica G. Young, Mats J. Stensrud, Eric J. Tchetgen Tchetgen, Miguel A. Hernán  (2020):
-  # "A causal framework for classical statistical estimands in failure-time settings with 
-  # competing events"
-
-# https://doi.org/10.1002/sim.8471
-
 #############################################################################################
 
 
+###################
+# Acknowledgements:
+###################
 
+# 1) This code is based on the code written by Mats Stensrud et al in the paper:  
+   # Jessica G. Young, Mats J. Stensrud, Eric J. Tchetgen Tchetgen, Miguel A. Hernán  (2020):
+     # "A causal framework for classical statistical estimands in failure-time settings with 
+     # competing events"
+   # https://doi.org/10.1002/sim.8471
+
+# 2) The functions to simulate the cancer data set (i.e., patient characteristics and 
+   # survival times were written and provided by Dr. Aurelien Belot. 
 
   
-################################################################################
+##########
+# Outline:
+##########
 
 # This code shows how to estimate the total causal effect of an exposure on an
 # outcome when the cause of death is unknown (i.e., relative survival setting).
@@ -27,8 +30,11 @@
 # Outcome    : Cancer-related death (death due to cancer)
 # Confounders: Age (15-99), sex (0 = male, 1 = female), L1 (0 = no, 1 = yes)
 
-################################################################################
-  
+
+
+#############
+# Set-up
+#############
 
 # Install necessary packages
   library(progress)
@@ -66,11 +72,6 @@
   
 # Set number of observations you want in your study
   n <- 10000
-
-# State the number of time points (K) 
-  # This is the number of cut times for the Pooled Logistic Regression
-  cutTimes <- c(0:59)     # Here, K=60 because 60 months is 5 years
-
   
 # Simulate the patient characteristics using the 'cDataDesignOptim' function
   # betaagecr: age (centred and rescaled) increases the chances of having the exposure (comorbidity) by 2.5
@@ -88,6 +89,14 @@
                                 lambda.weib=0.1, rho.weib=0.9, 
                                 BetaAge = 0.5, Betasex = -0.07, BetaCmb = 0.3, BetaL1 = 0.2)
   
+# State the number of time points (K) 
+  # This is the number of cut times for the Pooled Logistic Regression
+  cutTimes <- c(0:59)     
+  # Here, K=60 because we are interested in survival at 5 years. 
+  # The follow-up time (i.e., duee to administrative censoring) can be more than 5 years. 
+  # The maximum follow-up time is 11 years (i.e., 2005 to end of 2015) 
+
+
 # Rename your data set  
   data <- Sigoptim
 
@@ -105,6 +114,7 @@
                                              expected = "exprate")))
   # Check that the coefficients are the same as those that were specified when simulating the data
   summary(ehmodel) 
+  # The log-excess hazard coefficients should be close to the values used when simulating the data
   
 # Predict the excess hazard at each interval for each patient (10 seconds with 10,000 observations)
   for (k in 1:nrow(data)) {
@@ -116,6 +126,8 @@
                                                  L1 = data$L1[k]))
     data$excesshazard[k] <- pred.model1[["results"]][["hazard"]] 
   }
+  # It is important that the prediction of the excess hazard is from a model that has a longer
+  # follow-up time than the point of administrative censoring.
 
 # Censor the patients at 5 years
   data$cause <- ifelse(data$finalsurvtime >= 5, 0, data$cause)
@@ -132,13 +144,14 @@
   SumW <- sum(data$weightsE[data$vstatus==1]) ; SumW
   NY <- sum(data$cause==1) ; NY       # Sanity check
   
-# Summmarise the weights for other cause of death
+# Summmarise the weights for other-cause death
   SumP <- sum(data$weightsP[data$vstatus==1]) ; SumP
   ND <- sum(data$cause==2) ; ND       # Sanity check
   
-# Check the proportion of cancer deaths amongst any-cause death
+# Check the proportion of cancer deaths amongst all-cause death
   Prop.cancerdeaths <- SumW/sum(data$vstatus); Prop.cancerdeaths
   # The proportion of cancer deaths should be between 30-90%   
+  # Outside of this range might not provide reliable weights.
   
 
   
@@ -173,16 +186,15 @@
   
   # Put the information of censoring time into the data for the all-cause times.
   longdata$eventCens <- longdataCens$eventCens
-
+  
 # Restrict input data set to records with dtime<K+1 for fitting pooled over time models
   # In other words, stop the study at K by removing those records that are after K
   longdata <- longdata[longdata$dtime<length(cutTimes),]
   
-  # To confirm the maximum of dtime should be less than K (since K(1) = 0)
+  # Check the maximum of dtime should be less than K (since K(1) = 0)
   summary(longdata$dtime)
   
-# Create 'baseline' - data collected at visit 0
-  # Create the baseline data (i.e., confounders measured at baseline)
+# Create the baseline data (i.e., confounders measured at baseline)
   baseline <- longdata[longdata$dtime==0,]
   
 # Number of subjects
@@ -206,17 +218,15 @@
   # Weights for the other-cause death
   method1$weightsO <- ifelse(method1$allCause==1, method1$weightsP, 1)
   
-# WPLR for the cancer-related death
+# WPLR model for the cancer-related death
   suppressWarnings({
     invisible(capture.output(plrFitP1 <- glm(allCause ~ dtime + agecr + IsexH + cmb + L1, 
-                                             data = method1, family=binomial(), weight = weightsC)
-    ))})
+                                             data = method1, family=binomial(), weight = weightsC)))})
   
-# WPLR for the other-cause death death
+# WPLR model for the other-cause death
   suppressWarnings({
     invisible(capture.output(plrFitO1 <- glm(allCause   ~ dtime + agecr + IsexH + cmb + L1, 
-                                             data = method1, family=binomial(), weight = weightsO)
-    ))})
+                                             data = method1, family=binomial(), weight = weightsO)))})
   
   
 ####################################################################
