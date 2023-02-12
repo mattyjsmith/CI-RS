@@ -1,5 +1,7 @@
 # CI-RS
-This repository contains an R script for estimating causal effects of an exposure on an outcome when the cause of death is unknown. The essential idea is to use information on expected mortality rates (obtained from life tables) to estimate the probability that an all-cause death is due to cancer or other causes.
+This repository contains an R script for estimating causal effects of an exposure on an outcome when the cause of death is unknown. 
+
+The essential idea is to use information on expected mortality rates (obtained from life tables) to estimate the probability that an all-cause death is due to cancer or other causes.
 
 
 # Description of necessary files
