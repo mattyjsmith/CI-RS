@@ -12,8 +12,9 @@
 # 1) This code is based on the code written by Mats Stensrud et al in the paper:  
    # Jessica G. Young, Mats J. Stensrud, Eric J. Tchetgen Tchetgen, Miguel A. Hernán  (2020):
      # "A causal framework for classical statistical estimands in failure-time settings with 
-     # competing events"
-   # https://doi.org/10.1002/sim.8471
+     # competing events". https://doi.org/10.1002/sim.8471
+   # Our code allows estimation when the cause of death (i.e., the outcome of interest) is 
+     # not known.
 
 # 2) The functions to simulate the cancer data set (i.e., patient characteristics and 
    # survival times were written and provided by Dr. Aurelien Belot. 
