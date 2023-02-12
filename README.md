@@ -7,7 +7,7 @@ The essential idea is to use information on expected mortality rates (obtained f
 # Description of necessary files
 
 ### CI&RS 
-This R script shows the code required to estimate causal effect using information from the relative survival setting.
+This R script shows the code required to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
 
 ### exprates.Rds
 This is data for the expected mortality rates (stratified by age, sex, year, and comorbidity).
