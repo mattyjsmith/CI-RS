@@ -24,7 +24,7 @@
 # outcome when the cause of death is unknown (i.e., relative survival setting).
 
 # Exposure   : Comorbidity status (0 = none, 1 = at least one comorbidity)
-# Outcome    : Death due to any cause
+# Outcome    : Cancer-related death (death due to cancer)
 # Confounders: Age (15-99), sex (0 = male, 1 = female), L1 (0 = no, 1 = yes)
 
 ################################################################################
@@ -269,30 +269,4 @@
   # Risk difference
   gcomptotrd<-cumIncTreatedRS[length(cutTimes)]-cumIncPlaceboRS[length(cutTimes)]; print(gcomptotrd)       
   # RD = 0.06572498 ... risk of cancer death among those with A=1 is 6.6% higher than those with A=0
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
