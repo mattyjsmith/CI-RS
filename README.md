@@ -5,6 +5,7 @@ The essential idea is to use information on expected mortality rates (obtained f
 
 
 This is an adaptation of the work by Young et al (2020):
+
 Young JG, Stensrud MJ, Tchetgen Tchetgen EJ, Hernán MA. A causal framework for classical statistical estimands in failure time settings with competing events. Statistics in Medicine 2020 https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.8471
 
 
