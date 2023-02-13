@@ -224,12 +224,13 @@
   suppressWarnings({
     invisible(capture.output(plrFitP1 <- glm(allCause ~ dtime + agecr + IsexH + cmb + L1, 
                                              data = method1, family=binomial(), weight = weightsC)))})
-  
+   # Note that this model is weighted by the probability of cancer-related death (i.e., "weightsC")  
+
 # WPLR model for the other-cause death
   suppressWarnings({
     invisible(capture.output(plrFitO1 <- glm(allCause   ~ dtime + agecr + IsexH + cmb + L1, 
                                              data = method1, family=binomial(), weight = weightsO)))})
-  
+  # Note that this model is weighted by the probability of other-cause death (i.e., "weightsO")
   
 ####################################################################
 # Create expanded data sets to obtain parametric g-formula estimates 
