@@ -27,9 +27,9 @@
 # This code shows how to estimate the total causal effect of an exposure on an
 # outcome when the cause of death is unknown (i.e., relative survival setting).
 
-# Exposure   : Comorbidity status (0 = none, 1 = at least one comorbidity)
+# Exposure   : cmb (Binary: cmb = 0, cmb = 1) 
 # Outcome    : Cancer-related death (death due to cancer)
-# Confounders: Age (15-99), sex (0 = male, 1 = female), L1 (0 = no, 1 = yes)
+# Confounders: age (15-99), sex (0 = male, 1 = female), L1 (0 = no, 1 = yes)
 
 
 
@@ -61,7 +61,7 @@
 
 # Ensure you have loaded the life table (from the GitHub repo):
   exprates <- readRDS(file="exprates.Rds")
-    # The expected mortality rates are stratified by age, sex, year, and comorbidity status
+    # The expected mortality rates are stratified by age, sex, year, and the exposure (cmb)
 
 
 ###############
@@ -75,9 +75,9 @@
   n <- 10000
   
 # Simulate the patient characteristics using the 'cDataDesignOptim' function
-  # betaagecr: age (centred and rescaled) increases the chances of having the exposure (comorbidity) by 2.5
-  # betasex  : females have 0.8 times the odds of having comorbidity compared to males
-  # betaL1   : Those with L1 = 1 have 1.3 times the probability of having comorbidity
+  # betaagecr: age (centred and rescaled) increases the chances of having the exposure by 2.5
+  # betasex  : females have 0.8 times the odds of having the exposure compared to males
+  # betaL1   : Those with L1 = 1 have 1.3 times the probability of having the exposure
   Simoptim <- cDataDesignOptim(n = n, seed=seed, cens.admin = 2015, 
                                 ydiagmin=2005, ydiagmax=2010, 
                                 betaagecr = 2.5, betasex = 0.8, betaL1 = 1.3)
@@ -128,9 +128,10 @@
     data$excesshazard[k] <- pred.model1[["results"]][["hazard"]] 
   }
   # It is important that the prediction of the excess hazard is from a model that has a longer
-  # follow-up time than the point of administrative censoring.
+  # follow-up time than the survival time of interest. In other words, the model estimates the
+  # excess hazard over 11 years of follow-up, but the survival of interest is 5-years.
 
-# Censor the patients at 5 years
+# Censor the patients at 5 years (i.e., administrative censoring)
   data$cause <- ifelse(data$finalsurvtime >= 5, 0, data$cause)
   data$vstatus <- ifelse(data$finalsurvtime >= 5, 0, data$vstatus)
   data$finalsurvtime <- ifelse(data$finalsurvtime >=5, 5, data$finalsurvtime)
@@ -268,7 +269,7 @@
   
 # Total Causal Effect of X -> Y
   
-# Estimate the risk of cancer-related death at each event time
+# Estimate the risk of cancer-related death at each event time for each level of the exposure (A=1 and A=0)
   cumIncTreatedRS <- calculateCumInc(treated)#a=1
   cumIncPlaceboRS <- calculateCumInc(placebo)#a=0
   
