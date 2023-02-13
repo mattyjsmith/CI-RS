@@ -48,6 +48,9 @@
   library(utils)
   library(boot)
 
+# Set working directory
+  setwd("~/CI&RS")
+
 # IMPORTANT!
   # Ensure you have the functions from the GitHub repo: mattyjsmith/CI-RS
       # 1. calculateCumInc
@@ -55,9 +58,6 @@
       # 3. cdatasimulationT1WeibOptim
   # If you have the "Functions.R" script in your working directory then run the following:
   source("Functions.R")
-
-# Set working directory
-  setwd("~/CI&RS")
 
 # Ensure you have loaded the life table (from the GitHub repo):
   exprates <- readRDS(file="exprates.Rds")
