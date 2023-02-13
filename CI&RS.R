@@ -1,5 +1,5 @@
 #############################################################################################
-# Title: On Causal Inference for the Relative Survival setting
+# Title: On Causal Inference for the Relative Survival Setting
 # Author: Matthew J. Smith
 # Date: 12th February 2023
 #############################################################################################
