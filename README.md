@@ -18,5 +18,6 @@ This is data for the expected mortality rates that are stratified by age, sex, y
 ### Functions.R
 This is the script containg the necessary functions used within the "CI&RS" script.
 
-
+### Bootstrap function.R
+This is the script containg the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the "estimand="RR" option.
 
