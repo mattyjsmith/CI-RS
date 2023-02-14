@@ -283,3 +283,34 @@
   gcomptotrd<-cumIncTreatedRS[length(cutTimes)]-cumIncPlaceboRS[length(cutTimes)]; print(gcomptotrd)       
   # RD = 0.06572498 ... risk of cancer death among those with A=1 is 6.6% higher than those with A=0
   
+
+
+############################################################################################################
+# Construct confidence intervals - bootstrap the standard error
+############################################################################################################
+  
+# To construct the confidence intervals you will need to get the Bootstrap function from the GitHub repo
+  # Notice that the Bootstrap function is specifically designed for this analysis. If you want to adapt 
+  # this analysis, you will need to adapt the Bootstrap function accordingly.
+  source("Bootstrap function.R")
+  
+# Set the seed
+  set.seed(1)
+  
+# Set number of bootstrap samples
+  bootrep <- 300
+  
+# Specify the progress 
+  p <- progress_estimated(bootrep + 1)
+  
+# Perform the bootstrap
+  # "Estimand" option specifies whether you want Risk Difference (RD) or Relative Risk (RR). RD is the default.
+  bsreps <- boot(data, boot_function, R=bootrep, estimand="RD")
+  
+# Mean of bootstrap replicates
+  BSestimate <- mean(bsreps$t); BSestimate
+  
+# Confidence interval
+  boot.ci1 <- boot.ci(bsreps, type=c('norm','basic','perc')); boot.ci1
+
+
