@@ -314,3 +314,16 @@
   boot.ci1 <- boot.ci(bsreps, type=c('norm','basic','perc')); boot.ci1
 
 
+
+##################################
+# Create plots
+##################################  
+  
+# Plot cumulative incidence
+  plot(cutTimes,cumIncTreatedRS, type="s",ylim=c(0,1), ylab="Risk of cancer death", 
+       xlab="Month",xlim=c(0,59), cex.lab=1.2, cex.main=1.2, lwd=1, lty=1, #xaxt="n",
+       main ="") # Death due to Prostate Cancer: Estimand (5)
+  lines(cutTimes, cumIncPlaceboRS, type="s",col=2,ylim=c(0,1),lwd=1,lty=1)
+  #axis(1, at = seq(0, 59, by = 6))
+  legend("topleft", c("A = 1", "A = 0"),
+         col=c(1,2), lty=c(1,1),cex=0.9,pt.cex=1,lwd=2,bty="n")
