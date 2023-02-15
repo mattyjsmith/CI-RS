@@ -1,5 +1,5 @@
 # Causal Inference for the Relative Survival Setting
-This repository shows how to estimate causal effects of an exposure on an outcome, in failure time settings, when the cause of death is unknown. 
+This repository shows how to estimate causal effects of an exposure on an outcome (in failure time settings) when the cause of death is unknown. 
 
 The essential idea is to:
   1) Use information on expected mortality rates (obtained from life tables) to estimate the probability (create weights) that an all-cause death is due to cancer or other causes
