@@ -8,7 +8,7 @@ Estimating causal effects in the relative survival setting involves two main ste
 This is an adaptation of the work by: 
 > Young JG, Stensrud MJ, Tchetgen Tchetgen EJ, Hernán MA. A causal framework for classical statistical estimands in failure time settings with competing events. Statistics in Medicine. 2020 https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.8471
 
-This method can be applied for any disease-specific mortality of interest. Originally, the excess hazard model was developed as an approach to estimate 
+This method can be applied for any disease-specific mortality of interest. Originally, the excess hazard model was developed as an approach to calculate net survival estimates for patients with cancer.  
 
 # Description of necessary files
 
