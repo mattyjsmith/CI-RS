@@ -1,5 +1,11 @@
 # User defined functions
 
+#################################################################
+# cDataDesignOptim was created by Aurelien Belot
+# cdatasimulationT1WeibOptim was created by Aurelien Belot
+# calculateCumInc was created for the paper by Young et al (2020)
+#################################################################
+
 # Function to simulate the patient characteristics
 cDataDesignOptim <- function (n = 500, seed=1234, cens.admin = 2012, ydiagmin=1998, ydiagmax=2000,
                               NCluster = 10, ClusterSize = NULL,
