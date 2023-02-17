@@ -23,7 +23,8 @@ This data set contains the expected mortality rates from life tables that are st
 This R script contains the necessary functions used within the "CI&RS" script.
 
   1) ***cDataDesignOptim*** is the function to simulate patient characteristics.
-  2) 
+  2) ***cdatasimulationT1WeibOptim*** is the function to simulate the failure time and vital status (only after aimulating the patient characteristcs).
+  3) ***
 
 ### Bootstrap function.R
 This is the script containing the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
