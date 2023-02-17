@@ -27,5 +27,5 @@ This R script contains the necessary functions used within the "CI&RS" script.
   3) ***calculateCumInc*** is the function to estimate the cumulative incidence. This function is created for the paper by Young *et al* (2020).
 
 ### Bootstrap function.R
-This is the script containing the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
+This R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
