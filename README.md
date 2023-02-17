@@ -14,7 +14,7 @@ This is an adaptation of the work by:
 # Description of necessary files
 
 ### CI&RS 
-This R script shows the code required to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
+This R script contains the code to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
 
 ### exprates.Rds
 This data set contains the expected mortality rates from life tables that are stratified by age, sex, year, and another variable (cmb).
