@@ -7,6 +7,7 @@ Estimating causal effects in the relative survival setting involves two main ste
 
 This method can be applied for any disease-specific mortality of interest. Originally, the excess hazard model was developed as an approach to calculate net survival estimates for a sample of patients with cancer. The "excess hazard" is the additional mortality hazard of a disease of interest beyond what is expected in the general population. Thus, these weights can be applied to any disease of interest. However, careful consideration is required in terms of the causal question and whether the life tables are sufficiently stratified regarding the disease of interest. 
 
+
 This is an adaptation of the work by: 
 > Young JG, Stensrud MJ, Tchetgen Tchetgen EJ, Hernán MA. A causal framework for classical statistical estimands in failure time settings with competing events. Statistics in Medicine. 2020 https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.8471
 
