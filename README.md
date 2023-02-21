@@ -13,23 +13,23 @@ This is an adaptation of the work by:
 > Young JG, Stensrud MJ, Tchetgen Tchetgen EJ, Hernán MA. A causal framework for classical statistical estimands in failure time settings with competing events. Statistics in Medicine. 2020 https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.8471
 
 
-# Description of necessary files
+## Description of necessary files
 
-### CI&RS 
+#### CI&RS 
 This R script contains the code to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
 
-### exprates.Rds
+#### exprates.Rds
 This data set contains the expected mortality rates from life tables that are stratified by age, sex, year, and another variable (cmb).
 
-### Functions.R
+#### Functions.R
 This R script contains the necessary functions used within the "CI&RS" script:
 
   1) ***cDataDesignOptim*** is the function to simulate patient characteristics. 
   2) ***cdatasimulationT1WeibOptim*** is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
   3) ***calculateCumInc*** is the function to estimate the cumulative incidence.
 
-***cDataDesignOptim*** and ***cdatasimulationT1WeibOptim*** were created by Aurélien Belot. ***calculateCumInc*** was written by Young *et al* (2020).
+**cDataDesignOptim** and **cdatasimulationT1WeibOptim** were created by Aurélien Belot. **calculateCumInc** was written by Young *et al* (2020).
 
-### Bootstrap function.R
+#### Bootstrap function.R
 This R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
