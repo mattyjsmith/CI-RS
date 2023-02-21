@@ -34,3 +34,6 @@ This R script contains the necessary functions used within the "CI&RS" script:
 #### Bootstrap function.R
 This R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
+---
+
+This work is a collaboration between members of the [Inequalities in Cancer Outcomes Network](https://icon.lshtm.ac.uk/)
