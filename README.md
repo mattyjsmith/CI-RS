@@ -23,7 +23,7 @@ The [CI&RS](https://github.com/mattyjsmith/CI-RS/blob/main/CI%26RS.R) R script c
 The [exprates.Rds](https://github.com/mattyjsmith/CI-RS/blob/main/exprates.Rds) data set contains the expected mortality rates from life tables that are stratified by age, sex, year, and another variable (cmb).
 
 #### Functions.R
-This R script contains the necessary functions used within the "CI&RS" script:
+The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R script contains the necessary functions used within the "CI&RS" script:
 
   1) `cDataDesignOptim` is the function to simulate patient characteristics. 
   2) `cdatasimulationT1WeibOptim` is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
