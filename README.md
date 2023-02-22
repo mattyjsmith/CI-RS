@@ -16,13 +16,13 @@ This is an adaptation of the work by:
 
 ## Description of necessary files
 
-#### CI&RS 
+#### Causal Inference and Relative Survival
 The [CI&RS](https://github.com/mattyjsmith/CI-RS/blob/main/CI%26RS.R) R script contains the code to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
 
-#### exprates.Rds
+#### Expected Mortality Rates
 The [exprates.Rds](https://github.com/mattyjsmith/CI-RS/blob/main/exprates.Rds) data set contains the expected mortality rates from life tables that are stratified by age, sex, year, and another variable (cmb).
 
-#### Functions.R
+#### Necessary Functions
 The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R script contains the necessary functions used within the "CI&RS" script:
 
   1) `cDataDesignOptim` is the function to simulate patient characteristics. 
@@ -31,7 +31,7 @@ The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R sc
 
 `cDataDesignOptim` and `cdatasimulationT1WeibOptim` were created by [Aurélien Belot](https://github.com/AurelienBelot). `calculateCumInc` was written by Young *et al* (2020).
 
-#### Bootstrap function.R
+#### Bootstrap function
 The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstrap%20function.R) R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
 ---
