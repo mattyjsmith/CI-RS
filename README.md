@@ -32,7 +32,7 @@ The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R sc
 `cDataDesignOptim` and `cdatasimulationT1WeibOptim` were created by [Aurélien Belot](https://github.com/AurelienBelot). `calculateCumInc` was written by Young *et al* (2020).
 
 #### Bootstrap function.R
-This R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
+The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstrap%20function.R) R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
 ---
 
