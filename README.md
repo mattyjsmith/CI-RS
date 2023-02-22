@@ -14,7 +14,7 @@ This is an adaptation of the work by:
 
 ---
 
-## Description of necessary files
+# Description of necessary files
 
 #### Causal Inference and Relative Survival
 The [CI&RS](https://github.com/mattyjsmith/CI-RS/blob/main/CI%26RS.R) R script contains the code to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
