@@ -28,11 +28,12 @@ The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R sc
   2) `cdatasimulationT1WeibOptim` is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
   3) `calculateCumInc` is the function to estimate the cumulative incidence.
 
-`cDataDesignOptim` and `cdatasimulationT1WeibOptim` were created by [Aurélien Belot](https://github.com/AurelienBelot). `calculateCumInc` was written by Young *et al* (2020).
+`cDataDesignOptim` and `cdatasimulationT1WeibOptim` were created by [Aurélien Belot](https://github.com/AurelienBelot). 
+`calculateCumInc` was written by Young *et al* (2020).
 
 ### Bootstrap function
 The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstrap%20function.R) R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
 ---
 
-This work is a collaboration between members of the [Inequalities in Cancer Outcomes Network](https://icon.lshtm.ac.uk/)
+This work is a collaboration between members of the [Inequalities in Cancer Outcomes Network](https://icon.lshtm.ac.uk/).
