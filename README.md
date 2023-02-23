@@ -29,6 +29,7 @@ The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R sc
   3) `calculateCumInc` is the function to estimate the cumulative incidence.
 
 `cDataDesignOptim` and `cdatasimulationT1WeibOptim` were created by [Aurélien Belot](https://github.com/AurelienBelot). 
+
 `calculateCumInc` was written by Young *et al* (2020).
 
 ### Bootstrap function
