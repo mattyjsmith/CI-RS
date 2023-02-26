@@ -3,8 +3,8 @@
 This repository shows how to estimate causal effects of an exposure on an outcome (in failure-time settings) when the cause of death is unknown. 
 
 Estimating causal effects in the relative survival setting involves two main steps:
-  1) Use information on expected mortality rates (obtained from life tables), and construct an excess hazard model, to estimate the probability (i.e., create weights) that an all-cause death is due to the disease of interest or other causes
-  2) Choose an estimator (e.g., g-formula, IPTW, etc.) from within the competing risk (or competing event) framework that can incorporate these weights.
+  1) **Predict** the probability (i.e., create weights) that an all-cause death is due to the disease of interest or other causes. 
+  2) **Estimate causal effects** of an exposure on an outcome using an estimator (e.g., g-formula, IPTW, etc.) from within the competing risk (or competing event) framework that can incorporate these weights.
 
 This method can be applied for any disease-specific mortality of interest. Originally, the excess hazard model was developed as an approach to calculate net survival estimates for a sample of patients with cancer. The "excess hazard" is the additional mortality hazard of a disease of interest beyond what is expected in the general population. Thus, these weights can be applied to any disease of interest. However, careful consideration is required in terms of the causal question and whether the life tables are sufficiently stratified regarding the disease of interest. 
 
