@@ -37,6 +37,6 @@ This work is a collaboration between members of the [Inequalities in Cancer Outc
 
 ---
 
-[^1]: `cDataDesignOptim` and `cdatasimulationT1WeibOptim` were created by [Aurélien Belot](https://github.com/AurelienBelot). 
+[^1]: Created by [Aurélien Belot](https://github.com/AurelienBelot). 
 
-[^2]: `calculateCumInc` was written by Young *et al* (2020).
+[^2]: Written by Young *et al* (2020).
