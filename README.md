@@ -26,7 +26,7 @@ The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R sc
 
   1) `cDataDesignOptim`[^1] is the function to simulate patient characteristics. 
   2) `cdatasimulationT1WeibOptim`[^1] is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
-  3) `calculateCumInc` is the function to estimate the cumulative incidence.
+  3) `calculateCumInc`[^2] is the function to estimate the cumulative incidence.
 
 ### Bootstrap function
 The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstrap%20function.R) R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
