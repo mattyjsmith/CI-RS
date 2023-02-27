@@ -1,7 +1,9 @@
 #############################################################################################
-# Title: On Causal Inference for the Relative Survival Setting
-# Author: Matthew J. Smith
-# Date: 12th February 2023
+#      Title: On Causal Inference for the Relative Survival Setting
+#     Author: Matthew J. Smith
+# Co-authors: Bernard Rachet, Aurelien Belot, Miguel Angel Luque Fernandez, 
+#             Camille Maringe, Clemence Leyrat, Andriana Kostouraki
+#       Date: 12th February 2023
 #############################################################################################
 
 
