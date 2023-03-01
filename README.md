@@ -1,6 +1,6 @@
 # Causal Inference for the Relative Survival Setting
 
-This repository shows how to estimate causal effects of an exposure on an outcome (in failure-time settings) when the cause of death is unknown. 
+This repository shows how to estimate causal effects of an exposure on an outcome (in failure-time settings) when the cause of death is unknown.[^1] 
 
 Estimating causal effects in the relative survival setting involves two main steps:
   1) **Predict** the probability (i.e., create weights) that an all-cause death is due to the disease of interest or other causes. 
@@ -24,19 +24,17 @@ The [exprates.Rds](https://github.com/mattyjsmith/CI-RS/blob/main/exprates.Rds) 
 ### Necessary Functions
 The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R script contains the necessary functions used within the "CI&RS" script:
 
-  1) `cDataDesignOptim`[^1] is the function to simulate patient characteristics. 
-  2) `cdatasimulationT1WeibOptim`[^1] is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
-  3) `calculateCumInc`[^2] is the function to estimate the cumulative incidence.
+  1) `cDataDesignOptim`[^2] is the function to simulate patient characteristics. 
+  2) `cdatasimulationT1WeibOptim`[^2] is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
+  3) `calculateCumInc`[^3] is the function to estimate the cumulative incidence.
 
 ### Bootstrap function
 The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstrap%20function.R) R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
 ---
 
-This work is a collaboration between members of the [Inequalities in Cancer Outcomes Network](https://icon.lshtm.ac.uk/).
+[^1]: This work is a collaboration between members of the [Inequalities in Cancer Outcomes Network](https://icon.lshtm.ac.uk/).
 
----
+[^2]: Created by [Aurélien Belot](https://github.com/AurelienBelot). 
 
-[^1]: Created by [Aurélien Belot](https://github.com/AurelienBelot). 
-
-[^2]: Written by Young *et al* (2020).
+[^3]: Written by Young *et al* (2020).
