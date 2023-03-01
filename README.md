@@ -2,6 +2,7 @@
 
 This repository shows how to estimate causal effects of an exposure on an outcome (in failure-time settings) when the cause of death is unknown. 
 
+
 Estimating causal effects in the relative survival setting involves two main steps:
   1) **Predict** the probability (i.e., create weights) that an all-cause death is due to the disease of interest or other causes. 
   2) **Estimate causal effects** of an exposure on an outcome using an estimator (e.g., g-formula, IPTW, etc.) from within the competing risk framework that can incorporate the weights (from Step 1).
