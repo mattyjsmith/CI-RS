@@ -1,6 +1,5 @@
 # Causal Inference for the Relative Survival Setting
 
-
 This repository shows how to estimate causal effects of an exposure on an outcome (in failure-time settings) when the cause of death is unknown.[^1] 
 
 
