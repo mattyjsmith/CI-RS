@@ -36,4 +36,4 @@ The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstra
 
 [^1]: Created by [Aurélien Belot](https://github.com/AurelienBelot). 
 
-[^2]: Written by Young *et al* (2020).
+[^2]: Young JG, Stensrud MJ, Tchetgen Tchetgen EJ, Hernán MA. A causal framework for classical statistical estimands in failure time settings with competing events. Statistics in Medicine. 2020 https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.8471
