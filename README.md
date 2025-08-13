@@ -16,7 +16,7 @@ This is an adaptation of the work by:
 
 # Description of necessary files
 
-You do not need to run the simulations to get the results. The results of the simulations are provided in [results.rds](https://github.com/mattyjsmith/CI-RS/blob/main/results.rds). You can simply run the [09_performance_measures]() script, which will load the results of the simulations, to construct figures for the performance measures. 
+You do not need to run the simulations to get the results. The results of the simulations are provided in [results.rds](https://github.com/mattyjsmith/CI-RS/blob/main/results.rds). You can simply run the [09_performance_measures]() script, which will load the results of the simulations, to construct figures for the performance measures. The summary of the performance measures is provided in [performance_summary_with_samplesizes.csv](https://github.com/mattyjsmith/CI-RS/blob/main/performance_summary_with_samplesizes.csv).
 
 ### Running the simulation study
 The [07_run_simulation](https://github.com/mattyjsmith/CI-RS/blob/main/07_run_simulation.R) R script contains the code to run simulations for estimating the total causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting. Ensure you have downloaded the full repository because this script sources the other scripts containing the necessary functions. Be aware that the simulation study can take several weeks on one computer, therefore it is advised that this be run on a high performance computer.
