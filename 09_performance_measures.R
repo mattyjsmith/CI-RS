@@ -5,7 +5,7 @@
 ################################################################################
 
 # ---- Setup ----
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documents/LSHTM/ICON/Research Fellow/CI and RS/Playground")
+setwd("~/Playground")
 rm(list = ls())
 
 # ---- Load libraries ----
@@ -17,23 +17,6 @@ library(tidyr)
 library(ggplot2)
 
 # ---- Load results ----
-results1000 <- readRDS("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documents/LSHTM/ICON/Research Fellow/CI and RS/Playground/Done/sim_results_1000.rds")
-results1000$n <- 1000
-results1000$SampleSize <- results1000$n
-
-results3000 <- readRDS("merged_sim_results_n3000.rds")
-results3000$SampleSize <- results3000$n
-
-results5000 <- readRDS("merged_sim_results_n5000.rds")
-results5000$SampleSize <- results5000$n
-
-results10000 <- readRDS("merged_sim_results_n10000.rds")
-results10000$SampleSize <- results10000$n
-
-# Merge into one big data frame
-results <- bind_rows(results1000, results3000, results5000, results10000)
-saveRDS(results, file = "results.rds")
-
 results <- readRDS("results.rds")
 
 # ---- Step 1: Load true values from large dataset ----
@@ -92,7 +75,7 @@ rsum <- simsum(
   se = "se",
   true = "theta",
   methodvar = "method",
-  by = c("estimand", "SampleSize")  # 👈 Stratify by both
+  by = c("estimand", "SampleSize")  
 )
 
 # ---- Step 4: Output summary ----
@@ -302,99 +285,6 @@ ggsave(
 
 
 
-
-# ---- Step 6: Plotting (one row; cols = estimand; x = SampleSize) ----
-df_summary_TE <- sumstats$summ %>%
-  dplyr::filter(estimand %in% c("Total RD", "Total logRR")) %>%
-  dplyr::mutate(
-    estimand   = factor(estimand, levels = c("Total RD", "Total logRR")),
-    SampleSize = factor(SampleSize)  # use discrete x within each estimand column
-  )
-
-# Map method codes to descriptive labels and order
-method_labels <- c(
-  "1" = "Cause-specific",
-  "2" = "Relative survival (Correct EHM & LT)",
-  "3" = "Relative survival (no Dep in EHM)",
-  "4" = "Relative survival (no Dep in LT)",
-  "5" = "Relative survival (no Dep in EHM or LT)"
-)
-
-df_summary_TE <- df_summary_TE %>%
-  dplyr::mutate(
-    method = factor(method, levels = as.character(1:5), labels = method_labels)
-  )
-
-base_theme_TE <- theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 0, hjust = 0.5),
-    legend.position = "bottom",
-    legend.box = "vertical",
-    legend.direction = "horizontal",
-    legend.text = element_text(size = 8.5),
-    legend.title = element_blank(),
-    plot.margin = margin(t = 5, r = 5, b = 30, l = 5),
-    strip.placement = "outside",
-    strip.text = element_text(face = "bold")
-  )
-
-# ---- Relative Bias ----
-plot_bias_TE <- df_summary_TE %>%
-  dplyr::filter(stat == "rbias") %>%
-  ggplot(aes(x = SampleSize, y = est, shape = method, group = method)) +
-  geom_point(position = position_dodge(width = 0.6), size = 3) +
-  geom_errorbar(aes(ymin = lower, ymax = upper),
-                width = 0.2,
-                position = position_dodge(width = 0.6)) +
-  geom_hline(yintercept = 0, linetype = "dashed") +
-  facet_grid(. ~ estimand) +  # one row; two columns = estimands
-  labs(
-    title = "Relative Bias by Method",
-    x = "Sample size", y = "Relative Bias", shape = "Method"
-  ) +
-  base_theme_TE +
-  guides(shape = guide_legend(nrow = 1, byrow = TRUE))
-
-# ---- Coverage ----
-plot_coverage_TE <- df_summary_TE %>%
-  dplyr::filter(stat == "cover") %>%
-  ggplot(aes(x = SampleSize, y = est, shape = method, group = method)) +
-  geom_point(position = position_dodge(width = 0.6), size = 3) +
-  geom_errorbar(aes(ymin = lower, ymax = upper),
-                width = 0.2,
-                position = position_dodge(width = 0.6)) +
-  geom_hline(yintercept = 0.95, linetype = "dashed") +
-  facet_grid(. ~ estimand) +
-  scale_y_continuous(limits = c(0.35, 1.00), breaks = seq(0.35, 1.00, by = 0.1)) +
-  labs(
-    title = "Coverage Probability by Method",
-    x = "Sample size", y = "Coverage", shape = "Method"
-  ) +
-  base_theme_TE +
-  guides(shape = guide_legend(nrow = 1, byrow = TRUE))
-
-# ---- Bias-Eliminated Coverage ----
-plot_be_coverage_TE <- df_summary_TE %>%
-  dplyr::filter(stat == "becover") %>%
-  ggplot(aes(x = SampleSize, y = est, shape = method, group = method)) +
-  geom_point(position = position_dodge(width = 0.6), size = 3) +
-  geom_errorbar(aes(ymin = lower, ymax = upper),
-                width = 0.2,
-                position = position_dodge(width = 0.6)) +
-  geom_hline(yintercept = 0.95, linetype = "dashed") +
-  facet_grid(. ~ estimand) +
-  scale_y_continuous(limits = c(0.85, 1.00), breaks = seq(0.85, 1.00, by = 0.05)) +
-  labs(
-    title = "Bias-Eliminated Coverage by Method",
-    x = "Sample size", y = "Bias-Eliminated Coverage", shape = "Method"
-  ) +
-  base_theme_TE +
-  guides(shape = guide_legend(nrow = 1, byrow = TRUE))
-
-# ---- Show Plots ----
-print(plot_bias_TE)
-print(plot_coverage_TE)
-print(plot_be_coverage_TE)
 
 
 
