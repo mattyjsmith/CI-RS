@@ -16,21 +16,20 @@ This is an adaptation of the work by:
 
 # Description of necessary files
 
-### Causal Inference and Relative Survival
-The [CI&RS](https://github.com/mattyjsmith/CI-RS/blob/main/CI%26RS.R) R script contains the code to estimate causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting.
+You do not need to run the simulations to get the results. The results of the simulations are provided in [results.rds](https://github.com/mattyjsmith/CI-RS/blob/main/results.rds). You can simply run the [09_performance_measures]() script, which will load the results of the simulations, to construct figures for the performance measures. 
+
+### Running the simulation study
+The [07_run_simulation](https://github.com/mattyjsmith/CI-RS/blob/main/07_run_simulation.R) R script contains the code to run simulations for estimating the total causal effects (i.e., risk difference and risk ratios) using information from the relative survival setting. Ensure you have downloaded the full repository because this script sources the other scripts containing the necessary functions. Be aware that the simulation study can take several weeks on one computer, therefore it is advised that this be run on a high performance computer.
 
 ### Expected Mortality Rates
-The [exprates.Rds](https://github.com/mattyjsmith/CI-RS/blob/main/exprates.Rds) data set contains the expected mortality rates from life tables that are stratified by age, sex, year, and another variable (cmb).
+The [LT.xlsx](https://github.com/mattyjsmith/CI-RS/blob/main/LT.xlsx) data set contains the expected mortality rates from life tables stratified by age, sex, deprivation, and calendar year.
 
-### Necessary Functions
-The [Functions](https://github.com/mattyjsmith/CI-RS/blob/main/Functions.R) R script contains the necessary functions used within the "CI&RS" script:
+### Notable Functions
+Notable functions are:
 
   1) `cDataDesignOptim`[^1] is the function to simulate patient characteristics. 
   2) `cdatasimulationT1WeibOptim`[^1] is the function to simulate the failure time and vital status (only after simulating the patient characteristcs).
   3) `calculateCumInc`[^2] is the function to estimate the cumulative incidence.
-
-### Bootstrap function
-The [Bootstrap function](https://github.com/mattyjsmith/CI-RS/blob/main/Bootstrap%20function.R) R script contains the bootstrap function used within the "CI&RS" script. The bootstap function calculates confidence intervals for the Risk Difference (RD) by default. If you want confidence intervals for the Relative Risk (RR), you will need to specify this using the ***estimand="RR"*** option.
 
 ---
 
