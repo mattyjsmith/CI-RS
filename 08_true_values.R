@@ -6,7 +6,7 @@
 ################################################################################
 
 # Set working directory
-setwd("~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Documents/LSHTM/ICON/Research Fellow/CI and RS/Playground")
+setwd("~/Playground")
 rm(list = ls())
 
 # ---- Load dependencies ----
