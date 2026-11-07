@@ -25,3 +25,5 @@ death as the competing event. The cause-specific g-formula (cause of death known
 7. `python3 make_latex_tables.py`: LaTeX table bodies from the CSV outputs.
 
 `02_functions.R` holds the functions used by steps 5 and 6. The CSV and PDF outputs from the run reported in the paper are included.
+
+Note: the paper's sensitivity analysis used B = 200 bootstrap resamples per factor; `05_sensitivity_lifetable.R` defaults to `B_sens <- 100` for speed. Set `B_sens <- 200` to match the paper.

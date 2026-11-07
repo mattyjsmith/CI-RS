@@ -58,7 +58,7 @@ See `empirical_example/README.md`.
 ## Data
 
 - **Life table.** `data/LT.xlsx` holds population mortality rates (`exprate`) by age (`AGERT`), calendar year (`YEARRT`), sex (`SEXRT`) and
-  deprivation group (`DEPRT`). It generates the other-cause deaths and provides the expected hazard in the analyses. Source: deprivation-specific population life table supplied by the authors; provenance to be documented.
+  deprivation group (`DEPRT`). It generates the other-cause deaths and provides the expected hazard in the analyses. Source: derived from the Office for National Statistics (ONS) national life tables for the United Kingdom (https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/datasets/nationallifetablesunitedkingdomreferencetables), stratified by deprivation group.
 - **Empirical example.** The Byar trial data are public and downloaded by `00_obtain_data.R`. The US Human Mortality Database rates
   need a free registration and must be downloaded by the user (see `empirical_example/README.md`).
 
