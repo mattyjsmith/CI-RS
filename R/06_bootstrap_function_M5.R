@@ -1,21 +1,31 @@
+# SPLINE-TIME VERSION: identical to the Paper folder's function except that the time model of the logistic regressions comes from the global `time_model`.
+# CORRECTED (see README_paper.md): indexing, dummy row, other-cause model.
 # 06_bootstrap_function.R
 
 # This script defines the boot_function used for bootstrap resampling
 # and estimation using a parametric g-formula approach with competing risks.
 
 # Define the Bootstrap function
-boot_function_M2 <- function(data, indices){
+boot_function_M5 <- function(data, indices){
   dt <- data[indices,]
   
   #p$tick()$print()  # update progress bar
   
   # Add patient number to the data
   dt$patno <- 1:nrow(dt)
+  # Time model of the pooled logistic regressions (global setting `time_model`, set in 07_run_simulation.R):
+  # "spline" = natural cubic spline in time (4 df); "linear" = linear time; "factor" = interval-specific intercepts.
+  # There is deliberately no default: if time_model is not set the function stops.
+  time_term <- switch(time_model,
+                      linear = "dtime",
+                      factor = "factor(dtime)",
+                      spline = "ns(dtime, df = 4)")
+  ends <- round(cutTimes + (cutTimes[2] - cutTimes[1]), 10)   # end time of each real (monthly) interval
   
   # Obtain the excess hazard Data
-  invisible(capture.output(ehmodel <- mexhaz(Surv(Timey, vstatus) ~ agecr + IsexH + dep + trt, 
+  invisible(capture.output(ehmodel <- mexhaz(Surv(Timey, vstatus) ~ agecr + IsexH + trt, 
                                              data = dt, base = "weibull", 
-                                             expected = "exprate")))
+                                             expected = "expratesMean")))
   
   # Specify the excess hazard at the time of each event
   # for (k in 1:nrow(dt)) {
@@ -45,10 +55,10 @@ boot_function_M2 <- function(data, indices){
   dt$Timey <- ifelse(dt$Timey >=2, 2, dt$Timey)
   
   # Calculate weights of cancer death
-  dt$weightsE <- (dt$excesshazard)/(dt$excesshazard + dt$exprate)
+  dt$weightsE <- (dt$excesshazard)/(dt$excesshazard + dt$expratesMean)
   
   # Calculate weights of other cause of death
-  dt$weightsP <- (dt$exprate)/(dt$excesshazard + dt$exprate)
+  dt$weightsP <- (dt$expratesMean)/(dt$excesshazard + dt$expratesMean)
   
   # Summmarise the weights for cancer death
   SumW <- sum(dt$weightsE[dt$vstatus==1]) ; SumW
@@ -108,13 +118,13 @@ boot_function_M2 <- function(data, indices){
   
   # Restrict input data set to records with dtime<K+1 for fitting pooled over time models
   # In other words, stop the study at K by removing those records that are after K
-  longdata <- longdata[longdata$dtime<length(cutTimes),]
+  baseline <- longdata[longdata$dtime==0,]   # one zero-length dummy row per person: baseline covariates only
+  longdata <- longdata[longdata$dtime>0,]    # the models are fitted on real person-intervals only
   # To confirm the maximum of dtime should be less than K (since K(1) = 0)
   #summary(longdata$dtime)
   
   # Create 'baseline' - data collected at visit 0
   # Create the baseline data (i.e., confounders measured at baseline)
-  baseline <- longdata[longdata$dtime==0,]
   
   # Number of subjects
   n.obs <- length(unique(longdata$patno))
@@ -131,17 +141,20 @@ boot_function_M2 <- function(data, indices){
   method1 <- longdata
   method1$weightsC <- ifelse(method1$allCause==1, method1$weightsE, 1)
   method1$weightsO <- ifelse(method1$allCause==1, method1$weightsP, 1)
+  # CORRECTION: other-cause model = fractional outcome (expected other-cause death), weight 1 on every row, so the
+  # hazard is (other-cause deaths)/(everyone at risk), as assumed by calculateCumInc
+  method1$yO <- ifelse(method1$allCause==1, method1$weightsP, 0)
   
   # PLR for the death due to cancer
   suppressWarnings({
-    invisible(capture.output(plrFitP1 <- glm(allCause ~ dtime + agecr + IsexH + dep + trt, 
+    invisible(capture.output(plrFitP1 <- glm(as.formula(paste("allCause ~", time_term, "+ agecr + IsexH + trt")), 
                                              data = method1, family=binomial(), weight = weightsC)
     ))})
   
   # PLR for the death due to other causes (only need variables that would be in life table)
   suppressWarnings({
-    invisible(capture.output(plrFitO1 <- glm(allCause ~ dtime + agecr + IsexH + dep + trt, 
-                                             data = method1, family=binomial(), weight = weightsO)
+    invisible(capture.output(plrFitO1 <- glm(as.formula(paste("yO ~", time_term, "+ agecr + IsexH + trt")),
+                                             data = method1, family=quasibinomial())
     ))})
   
   
@@ -178,8 +191,8 @@ boot_function_M2 <- function(data, indices){
   
   # Expand baseline so it contains a visit at each time point for every individual
   # where the baseline information has been carried forward at each time
-  treated <- baseline[rep(1:n.obs,each=length(cutTimes)),] #One row for each interval k+1 for k=0,...,K
-  treated$dtime <- rep(cutTimes,n.obs)
+  treated <- baseline[rep(1:n.obs,each=length(ends)),] #One row for each interval k+1 for k=0,...,K
+  treated$dtime <- rep(ends,n.obs)
   treated$trt <-1      # Assign all patient to have had the treatment
   
   
@@ -192,8 +205,8 @@ boot_function_M2 <- function(data, indices){
   
   
   # Make analogous dataset for placebo
-  placebo <- baseline[rep(1:n.obs,each=length(cutTimes)),] #One row for each time
-  placebo$dtime <- rep(cutTimes,n.obs)
+  placebo <- baseline[rep(1:n.obs,each=length(ends)),] #One row for each time
+  placebo$dtime <- rep(ends,n.obs)
   placebo$trt <- 0 
   
   # Estimate conditional discrete hazard for each subject in each time interval
@@ -207,12 +220,12 @@ boot_function_M2 <- function(data, indices){
   
   # Parametric g-formula estimate of the total effect
   # Risk ratio
-  log.gcomptotrr <- log(cumIncTreatedRS[length(cutTimes)]/cumIncPlaceboRS[length(cutTimes)]) #JGY need ci's on this, I think let's skip composite outcome this is all enough
+  log.gcomptotrr <- log(cumIncTreatedRS[length(ends)]/cumIncPlaceboRS[length(ends)]) #JGY need ci's on this, I think let's skip composite outcome this is all enough
   #logRR <- log(gcomptotrr)
   # print(gcomptotrr)       # RR = 1.264382 ... risk of cancer death among those with comorbidity is 1.27 times that of those without comorbidity
   
   # Risk difference
-  gcomptotrd<-cumIncTreatedRS[length(cutTimes)]-cumIncPlaceboRS[length(cutTimes)] #JGY need ci's on this
+  gcomptotrd<-cumIncTreatedRS[length(ends)]-cumIncPlaceboRS[length(ends)] #JGY need ci's on this
   # print(gcomptotrd)       # RD = 0.08825672 ... risk of cancer death among those with comorbidity is 8.8% higher than those without comorbidity
   
   
@@ -220,8 +233,8 @@ boot_function_M2 <- function(data, indices){
   cumIncTreated5comp <- calculateCumInc(treated, competing = TRUE)#a=1
   cumIncPlacebo5comp <- calculateCumInc(placebo, competing = TRUE)#a=0
   #(Total) effect on risk of competing event
-  log.gcompcomprr <- log(cumIncTreated5comp[length(cutTimes)]/cumIncPlacebo5comp[length(cutTimes)]) 
-  gcompcomprd <- cumIncTreated5comp[length(cutTimes)]-cumIncPlacebo5comp[length(cutTimes)] 
+  log.gcompcomprr <- log(cumIncTreated5comp[length(ends)]/cumIncPlacebo5comp[length(ends)]) 
+  gcompcomprd <- cumIncTreated5comp[length(ends)]-cumIncPlacebo5comp[length(ends)] 
   #print(log.gcompcomprr)
   #print(gcompcomprd)
   

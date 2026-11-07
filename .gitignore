@@ -1,0 +1,18 @@
+# per-replicate and merged simulation results (large; regenerate with the run scripts)
+simulations/*/results/
+simulations/*/results_*/
+simulations/*/merged_sim_results_*.rds
+simulations/*/truth_chunks_*.csv
+simulations/*/rsim_data.rds
+simulations/*/results_coverage.rds
+simulations/*/errors.log
+# empirical example: derived from the Human Mortality Database, which must be downloaded by each user
+empirical_example/data/*
+!empirical_example/data/.gitkeep
+empirical_example/analysis_data_*.csv
+empirical_example/empirical_results.rds
+# R / OS
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store

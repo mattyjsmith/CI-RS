@@ -1,0 +1,19 @@
+dose,method,arm,prostate_cancer_death,other_cause_death
+0.2 mg estrogen,Aalen-Johansen (non-parametric),Placebo,0.26771653543307067,0.3937007874015746
+0.2 mg estrogen,Aalen-Johansen (non-parametric),Estrogen,0.2822580645161289,0.37903225806451585
+0.2 mg estrogen,Cause-specific g-formula,Placebo,0.26890865992528007,0.3970918387637657
+0.2 mg estrogen,Cause-specific g-formula,Estrogen,0.28203364836217504,0.37600985235943896
+0.2 mg estrogen,Relative survival g-formula,Placebo,0.5368139245904515,0.11882023778098967
+0.2 mg estrogen,Relative survival g-formula,Estrogen,0.5632423172504148,0.10580048194388031
+1.0 mg estrogen,Aalen-Johansen (non-parametric),Placebo,0.26771653543307067,0.3937007874015746
+1.0 mg estrogen,Aalen-Johansen (non-parametric),Estrogen,0.1746031746031746,0.36507936507936534
+1.0 mg estrogen,Cause-specific g-formula,Placebo,0.2739619890129842,0.373851273773238
+1.0 mg estrogen,Cause-specific g-formula,Estrogen,0.1733822817931096,0.3880037454005578
+1.0 mg estrogen,Relative survival g-formula,Placebo,0.5361333232398896,0.10824731918715949
+1.0 mg estrogen,Relative survival g-formula,Estrogen,0.42030046526268555,0.13928167565375185
+5.0 mg estrogen,Aalen-Johansen (non-parametric),Placebo,0.26771653543307067,0.3937007874015746
+5.0 mg estrogen,Aalen-Johansen (non-parametric),Estrogen,0.17599999999999996,0.46400000000000013
+5.0 mg estrogen,Cause-specific g-formula,Placebo,0.2690804841784798,0.3823153287641114
+5.0 mg estrogen,Cause-specific g-formula,Estrogen,0.17553216872825847,0.4871952243089743
+5.0 mg estrogen,Relative survival g-formula,Placebo,0.5352535652798305,0.10899110688999605
+5.0 mg estrogen,Relative survival g-formula,Estrogen,0.5448119383000376,0.11974232747126201

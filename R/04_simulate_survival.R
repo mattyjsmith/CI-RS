@@ -1,4 +1,6 @@
 # 04_simulate_survival.R
+# CORRECTED VERSION (other-cause time over full follow-up; counterfactual worlds) (see README_paper.md): same scenarios and methods as the original,
+# with the corrections found in October 2026 applied.
 # Full version of cdatasimulationT1WeibOptim.v2 with support for:
 # - Weibull or Generalised Weibull survival
 # - Non-proportional hazards (NPH) by sex
@@ -61,15 +63,13 @@ cdatasimulationT1WeibOptim.v2 <- function (mydat, dist.T1="Weibull", lambda.weib
   
   # Warning messages to make sure you have included the necessary arguments
   if (dist.T1=="Weibull" & (is.null(lambda.weib) | is.null(rho.weib))) {stop("Arguments lambda.weib and rho.weib should be given for Weibull simulation!")}
-  if (dist.T1=="GenWeibull" & (is.null(k1) | is.null(r1) | is.null(a1))) {stop("Arguments k1, r1 and a1 should be given for Genearlised Weibull simulation!")}
-  if (NPH==TRUE & (is.null(lambda.weib2) | is.null(rho.weib2))) {stop("Arguments lambda.weib2 and rho.weib2 should be given for NPH simulation!")}
-  
+
   ########
   # Step 1
   ########
   
-  print("STEP 1 ")
-  print(date())
+  #print("STEP 1 ")
+  #print(date())
   
   # The list you created in cDataDesignOptim forms the cancer dataset you will use
   tab2 <- mydat$tab2
@@ -103,24 +103,33 @@ cdatasimulationT1WeibOptim.v2 <- function (mydat, dist.T1="Weibull", lambda.weib
   # Step 2
   ########
   
-  print("STEP 2 ")
-  print(date())
+  #print("STEP 2 ")
+  #print(date())
   
   # Survival Time from cancer T1  (Weibull)
   # Random number of n values
-  temp.ut1  <- runif(n)
-  # If NPH is included in the model
-  if (NPH==FALSE){
-    # If Wiebull or GenWeibull is specified
-    if (dist.T1=="Weibull"){ tab2$T1  <- exp((1/rho.weib) * (log(-1/lambda.weib*log(temp.ut1)) - log(tab2$exp.xbeta))) }
-    else if (dist.T1=="GenWeibull"){tab2$T1  <-  1/r1*(a1*((1/(1-temp.ut1))^(1/(a1*(tab2$exp.xbeta)))-1))^(1/k1)}
-  }
-  else if (NPH==TRUE)
-  { tab2$T1  <- (tab2$IsexH)*exp((1/rho.weib) * (log(-1/lambda.weib*log(temp.ut1)) - log(tab2$exp.xbeta) ))+
-    (1-tab2$IsexH)*exp((1/rho.weib2) * (log(-1/lambda.weib2*log(temp.ut1)) - log(tab2$exp.xbeta) ))         }
+
+  tab2$Trt0 <- 0
+  tab2$Trt1 <- 1
   
-  tab2$T1 <- ifelse(tab2$T1<=.Machine$double.eps^0.5, tab2$T1+10*.Machine$double.eps^0.5, tab2$T1)
-  tab2$T1 <- ifelse(is.na(tab2$T1), tab2$maxptime, tab2$T1)
+  # Counterfactual world: As if everyone was treated 
+  temp.ut1  <- runif(nrow(tab2))
+  
+  tab2$exp.xbetaT1 <- exp(BetaAge * tab2$agecr + Betasex * tab2$IsexH +      # Age and sex
+                                     Betatrt * tab2$Trt1 + Betadep * tab2$dep + Betastage * tab2$stage)
+  tab2$TimeT1Cause1 <- exp((1/rho.weib) * (log(-1/lambda.weib*log(temp.ut1)) - log(tab2$exp.xbetaT1))) # cancer
+
+  
+  # Counterfactual world: As if everyone was not treated 
+  temp.ut0  <- runif(nrow(tab2))
+  
+  tab2$exp.xbetaT0 <- exp(BetaAge * tab2$agecr + Betasex * tab2$IsexH +      # Age and sex
+                                     Betatrt * tab2$Trt0 + Betadep * tab2$dep + Betastage * tab2$stage)
+  
+  tab2$TimeT0Cause1 <- exp((1/rho.weib) * (log(-1/lambda.weib*log(temp.ut0)) - log(tab2$exp.xbetaT0))) # cancer
+
+
+  tab2$T1 <- ifelse(tab2$trt==1, tab2$TimeT1Cause1, tab2$TimeT0Cause1) # cancer
   
   # Survival Time from expected mortality T2
   # Minimum of time from cancer or time to censoring
@@ -128,9 +137,13 @@ cdatasimulationT1WeibOptim.v2 <- function (mydat, dist.T1="Weibull", lambda.weib
   # Flag those who died due to cancer (i.e., cancer time less than censoring time)
   tab2$cause1 <- ifelse(tab2$T1<tab2$potentime,1,0)
   # Age at censoring
-  tab2$ageout <- tab2$age+tab2$T1cens
+  # CORRECTION: the other-cause time T2 is simulated over the FULL potential follow-up (to administrative
+  # censoring), not only up to the observed cancer/censoring time. T2 is a person-level latent time shared by
+  # both counterfactual worlds, so it must exist after the observed cancer death too (e.g. when the other
+  # treatment arm would have lived longer).
+  tab2$ageout <- tab2$age+tab2$potentime
   # Year at censoring
-  tab2$yearout <- tab2$year+tab2$T1cens
+  tab2$yearout <- tab2$year+tab2$potentime
   
   # Create a Lexis object to split time along the two timescales (agediag and ydiag)
   # Object that represents follow-up in multiple states on multiple time scales (i.e., death from cancer, or censored, time to death or censor)
@@ -165,14 +178,12 @@ cdatasimulationT1WeibOptim.v2 <- function (mydat, dist.T1="Weibull", lambda.weib
   tab5$T2bis <- rexp(nrow(tab5), tab5$exprate)
   
   
-  
-  
   ########
   # Step 3
   ########
   
-  print("STEP 3 ")
-  print(date())
+  #print("STEP 3 ")
+  #print(date())
   
   # 
   # Extract those where T2bis is less than lex.dur for the variables of interest
@@ -197,14 +208,27 @@ cdatasimulationT1WeibOptim.v2 <- function (mydat, dist.T1="Weibull", lambda.weib
   # Join the data sets of: cancer data, time to other cause death, flag of other cause death, and actual final survival time
   datasimulation <- data.frame(tab2, T2 = tabtemp$T2, cause2=tabtemp$cause2, Timey)
   
+
+  datasimulation$TimeT1Cause2 <- datasimulation$T2 # other cause
+  datasimulation$TimeT1 <- pmin(datasimulation$TimeT1Cause1, datasimulation$TimeT1Cause2)
+  datasimulation$CauseT1 <- ( 0
+                    + 1 * (datasimulation$TimeT1 == datasimulation$TimeT1Cause1 & datasimulation$TimeT1 < datasimulation$potentime )
+                    + 2 * (datasimulation$TimeT1 == datasimulation$TimeT1Cause2 & datasimulation$TimeT1 < datasimulation$potentime ))
+  
+  datasimulation$TimeT0Cause2 <- datasimulation$T2 # other cause
+  datasimulation$TimeT0 <- pmin(datasimulation$TimeT0Cause1, datasimulation$TimeT0Cause2)
+  datasimulation$CauseT0 <- ( 0
+                    + 1 * (datasimulation$TimeT0 == datasimulation$TimeT0Cause1 & datasimulation$TimeT0 < datasimulation$potentime )
+                    + 2 * (datasimulation$TimeT0 == datasimulation$TimeT0Cause2 & datasimulation$TimeT0 < datasimulation$potentime ))
+  
   
   ########
   # Step 4
   ########
   
   
-  print("STEP 4 ")
-  print(date())
+  #print("STEP 4 ")
+  #print(date())
   
   # Vital Status ("vstatus")  : 1 ==> death, 0 ==> alive
   
@@ -218,24 +242,24 @@ cdatasimulationT1WeibOptim.v2 <- function (mydat, dist.T1="Weibull", lambda.weib
                            + 1 * (datasimulation$Timey == datasimulation$T1 & datasimulation$vstat == 1)
                            + 2 * (datasimulation$Timey == datasimulation$T2 & datasimulation$vstat == 1) )
   
-  # Update of the yearout and ageout to apply for finalsurvtime	and not T1 only
+  
+  # Update of the yearout and ageout to apply for finalsurvtime and not T1 only
   datasimulation$yearout <- datasimulation$year + datasimulation$Timey
   datasimulation$ageout <- datasimulation$age + datasimulation$Timey
   
-  # ----- datasimulation : Dataframe finale ----- #
+  # ----- datasimulation : final data frame, with the life-table rates at the end of follow-up ----- #
   datasimulation$truncyearout <- trunc(datasimulation$yearout)
   datasimulation$truncageout <- trunc(datasimulation$ageout)
   datasimulation <- merge(datasimulation, myexpmort,
                           by.x=c("truncyearout","truncageout","sex", "dep"),
                           by.y=c("YEARRT","AGERT","SEXRT","DEPRT"))
   
-  
   ########
   # Step 5
   ########
   
-  print("STEP 5 ")
-  print(date())
+  #print("STEP 5 ")
+  #print(date())
   
   # Return the data set that holds the variables
   return(datasimulation)

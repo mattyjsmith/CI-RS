@@ -1,0 +1,37 @@
+dose,method,estimand,estimate,lower,upper,failed_resamples
+0.2 mg estrogen,Aalen-Johansen (non-parametric),Prostate cancer death: risk difference,0.014541529083058224,-0.11368268986537977,0.11860077470154956,0
+0.2 mg estrogen,Cause-specific g-formula,Prostate cancer death: risk difference,0.013124988436894969,-0.107320887558615,0.12473812438799763,0
+0.2 mg estrogen,Relative survival g-formula,Prostate cancer death: risk difference,0.02642839265996333,-0.08955377494011266,0.13043697045526942,0
+0.2 mg estrogen,Aalen-Johansen (non-parametric),Prostate cancer death: risk ratio,1.0543168880455411,0.6560458466027022,1.5557642662480355,0
+0.2 mg estrogen,Cause-specific g-formula,Prostate cancer death: risk ratio,1.0488083516556959,0.7000627766195623,1.5800727883437504,0
+0.2 mg estrogen,Relative survival g-formula,Prostate cancer death: risk ratio,1.0492319432289805,0.8386992458947523,1.275898178784739,0
+0.2 mg estrogen,Aalen-Johansen (non-parametric),Other-cause death: risk difference,-0.014668529337058756,-0.12624777749555519,0.11210312420624846,0
+0.2 mg estrogen,Cause-specific g-formula,Other-cause death: risk difference,-0.021081986404326736,-0.15144760041478253,0.10256886145049982,0
+0.2 mg estrogen,Relative survival g-formula,Other-cause death: risk difference,-0.013019755837109362,-0.05880660210861652,0.038460136312324734,0
+0.2 mg estrogen,Aalen-Johansen (non-parametric),Other-cause death: risk ratio,0.9627419354838708,0.7184525089361175,1.3659861388814258,0
+0.2 mg estrogen,Cause-specific g-formula,Other-cause death: risk ratio,0.9469090413191075,0.685460852375897,1.3199898276921043,0
+0.2 mg estrogen,Relative survival g-formula,Other-cause death: risk ratio,0.8904247619744081,0.6143841985764941,1.3446766776784227,0
+1.0 mg estrogen,Aalen-Johansen (non-parametric),Prostate cancer death: risk difference,-0.09311336082989607,-0.18803899512560918,0.002188788901387414,0
+1.0 mg estrogen,Cause-specific g-formula,Prostate cancer death: risk difference,-0.10057970721987458,-0.19095766487328045,0.009536856559080925,0
+1.0 mg estrogen,Relative survival g-formula,Prostate cancer death: risk difference,-0.11583285797720405,-0.23095407426979372,0.011604858139867764,0
+1.0 mg estrogen,Aalen-Johansen (non-parametric),Prostate cancer death: risk ratio,0.6521942110177409,0.38766788766788784,1.008887953073956,0
+1.0 mg estrogen,Cause-specific g-formula,Prostate cancer death: risk ratio,0.632869845987621,0.4182965520709851,1.038524896403954,0
+1.0 mg estrogen,Relative survival g-formula,Prostate cancer death: risk ratio,0.78394766197852,0.5799489763654682,1.025277092197904,0
+1.0 mg estrogen,Aalen-Johansen (non-parametric),Other-cause death: risk difference,-0.028621422322209267,-0.15566022997125364,0.07418135233095859,0
+1.0 mg estrogen,Cause-specific g-formula,Other-cause death: risk difference,0.014152471627319807,-0.11794873165468847,0.12360811508908087,0
+1.0 mg estrogen,Relative survival g-formula,Other-cause death: risk difference,0.03103435646659236,-0.019449076758930758,0.10333983405764345,0
+1.0 mg estrogen,Aalen-Johansen (non-parametric),Other-cause death: risk ratio,0.9273015873015884,0.6589583152048174,1.2053647648117876,0
+1.0 mg estrogen,Cause-specific g-formula,Other-cause death: risk ratio,1.0378558871405748,0.7433693935594371,1.4101085040783135,0
+1.0 mg estrogen,Relative survival g-formula,Other-cause death: risk ratio,1.2866986147983397,0.8646559395017266,1.9898975872583446,0
+5.0 mg estrogen,Aalen-Johansen (non-parametric),Prostate cancer death: risk difference,-0.0917165354330707,-0.19446299212598406,0.003278740157480391,0
+5.0 mg estrogen,Cause-specific g-formula,Prostate cancer death: risk difference,-0.09354831545022133,-0.18036340222132288,-0.00500034474020169,0
+5.0 mg estrogen,Relative survival g-formula,Prostate cancer death: risk difference,0.009558373020207123,-0.11992907827769174,0.12869902210861608,0
+5.0 mg estrogen,Aalen-Johansen (non-parametric),Prostate cancer death: risk ratio,0.6574117647058827,0.394943722607676,1.0160000000000002,0
+5.0 mg estrogen,Cause-specific g-formula,Prostate cancer death: risk ratio,0.6523407643782476,0.40858196364357063,0.9761291500351351,0
+5.0 mg estrogen,Relative survival g-formula,Prostate cancer death: risk ratio,1.0178576540918696,0.7865794928149473,1.2692730745846206,0
+5.0 mg estrogen,Aalen-Johansen (non-parametric),Other-cause death: risk difference,0.07029921259842553,-0.04803937007873984,0.18918110236220506,0
+5.0 mg estrogen,Cause-specific g-formula,Other-cause death: risk difference,0.10487989554486288,-0.005341254985403086,0.21656434738717983,0
+5.0 mg estrogen,Relative survival g-formula,Other-cause death: risk difference,0.010751220581265958,-0.03990577004778901,0.05885395599279962,0
+5.0 mg estrogen,Aalen-Johansen (non-parametric),Other-cause death: risk ratio,1.178560000000001,0.9056738101578989,1.5489158889123638,0
+5.0 mg estrogen,Cause-specific g-formula,Other-cause death: risk ratio,1.2743282511949026,0.9876232922015189,1.6649247303909993,0
+5.0 mg estrogen,Relative survival g-formula,Other-cause death: risk ratio,1.0986430993137548,0.7168485515347487,1.604323977767782,0

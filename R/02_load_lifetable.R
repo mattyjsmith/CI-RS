@@ -2,7 +2,7 @@
 # Load and adjust life table data for deprivation
 
 # Load life table
-expratesASD <- as.data.frame(readxl::read_excel("LT.xlsx"))
+expratesASD <- as.data.frame(readxl::read_excel(here::here("data", "LT.xlsx")))
 
 # Keep only least (1) and most (5) deprived groups
 expratesASD <- expratesASD[expratesASD$DEPRT %in% c(1, 5), ]
